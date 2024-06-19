@@ -2,7 +2,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import View1 from "./pages/View1";
+import Page1 from "./pages/Page1";
+import Page2 from "./pages/Page2";
 
 function App() {
     return (
@@ -10,8 +11,8 @@ function App() {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/view1" element={<View1 />} />
-          {/* <Route path="/contact" element={<Contact />} /> */}
+                    <Route path="/page1" element={<Page1 />} />
+                    <Route path="/page2" element={<Page2 />} />
                 </Routes>
             </Layout>
         </>
