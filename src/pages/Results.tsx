@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Result } from "../types";
-import { fetchAllResults } from "../service/apiFacade";
+import { deleteResultById, fetchAllResults } from "../service/apiFacade";
 import ResultsList from "../components/results/ResultsList";
 
 export default function Results() {
@@ -15,12 +15,17 @@ export default function Results() {
         setResults(fetchedResults);
         console.log(fetchedResults);
     }
+
+    const deleteResult = async (id: number) => {
+        await deleteResultById(id);
+        await fetchResults();
+    }
     
     return (
         <>
             <h1 className="d-flex justify-content-center m-2">Results</h1>
             <div className="d-flex justify-content-center">
-                <ResultsList results={results} />
+                <ResultsList results={results} deleteResult={deleteResult} />
             </div>
         </>
     );

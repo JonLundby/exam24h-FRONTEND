@@ -76,7 +76,7 @@ async function deleteParticipantById(id: number) {
     return response;
 }
 
-// ------- PARTICIPANTS ------- //
+// ------- RESULTS ------- //
 async function fetchAllResults() {
     const response = await fetch(`${endpoint}/results`);
     if (!response.ok) {
@@ -84,6 +84,16 @@ async function fetchAllResults() {
     }
     const data = await response.json();
     return data;
+}
+
+async function deleteResultById(id: number) {
+    const response = await fetch(`${endpoint}/results/${id}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        throw new Error("Could not delete result");
+    }
+    return response;
 }
 
 export {
@@ -94,4 +104,5 @@ export {
     updateParticipant,
     deleteParticipantById,
     fetchAllResults,
+    deleteResultById
 };
