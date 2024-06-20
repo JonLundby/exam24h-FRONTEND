@@ -15,8 +15,8 @@ export default function NavMenu() {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/page2" className="nav-link text-white ml-3">
-                        Page2
+                    <NavLink to="/results" className="nav-link text-white ml-3">
+                        Results
                     </NavLink>
                 </li>
             </ul>

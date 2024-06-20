@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Participant } from "../types";
+import { Participant } from "../../types";
 
 type ListOfParticipantsProps = {
     participants: Participant[];
