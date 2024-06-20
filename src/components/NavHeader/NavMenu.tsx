@@ -10,8 +10,8 @@ export default function NavMenu() {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/deltagere" className="nav-link text-white ml-3">
-                        Deltagere
+                    <NavLink to="/participants" className="nav-link text-white ml-3">
+                        Participants
                     </NavLink>
                 </li>
                 <li>

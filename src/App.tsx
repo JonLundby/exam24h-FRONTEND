@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import Deltagere from "./pages/Deltagere";
+import Participants from "./pages/Participants";
 import Page2 from "./pages/Page2";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/deltagere" element={<Deltagere />} />
+                    <Route path="/participants" element={<Participants />} />
                     <Route path="/page2" element={<Page2 />} />
                 </Routes>
             </Layout>
