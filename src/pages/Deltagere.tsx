@@ -1,8 +1,8 @@
-export default function Page1() {
+export default function Deltagere() {
     return (
         <>
             <div className="d-flex justify-content-center">
-                <h1>Page 1</h1>
+                <h1>Deltagere</h1>
             </div>
         </>
     )
