@@ -6,9 +6,6 @@ type ListOfParticipantsProps = {
 };
 
 export default function ParticipantsList({ participants, deleteParticipant }: ListOfParticipantsProps) {
-    function handleNewParticipant() {
-        console.log("New Participant");
-    }
 
     const handleDeleteParticipant = async (id: number) => {
         deleteParticipant(id);
@@ -23,11 +20,11 @@ export default function ParticipantsList({ participants, deleteParticipant }: Li
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Club</th>
-                        <th colSpan={2}>
+                        {/* <th colSpan={2}>
                             <button className="btn btn-success" onClick={handleNewParticipant}>
                                 New Participant
                             </button>
-                        </th>
+                        </th> */}
                     </tr>
                 </thead>
                 <tbody>

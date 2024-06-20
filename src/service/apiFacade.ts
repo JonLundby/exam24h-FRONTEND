@@ -21,6 +21,21 @@ async function fetchParticipantById(id: number) {
     return data;
 }
 
+async function createParticipant(participant: Participant) {
+    const response = await fetch(`${endpoint}/participants`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(participant),
+    });
+    if (!response.ok) {
+        throw new Error("Could not create participant");
+    }
+    const data = await response.json();
+    return data;
+}
+
 async function postParticipant(participant: Participant) {
     const response = await fetch(`${endpoint}/participants`, {
         method: "POST",
@@ -61,4 +76,4 @@ async function deleteParticipantById(id: number) {
     return response;
 }   
 
-export { fetchAllParticipants, fetchParticipantById, postParticipant, updateParticipant, deleteParticipantById };
+export { fetchAllParticipants, fetchParticipantById, createParticipant, postParticipant, updateParticipant, deleteParticipantById };
