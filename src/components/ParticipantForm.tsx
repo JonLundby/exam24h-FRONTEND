@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Participant } from "../types";
 
-type ParticipantFormProps = {
+interface ParticipantFormProps {
     onCreateParticipant: (participant: Participant) => void;
-};
+}
 
-const ParticipantForm: React.FC<ParticipantFormProps> = ({ onCreateParticipant }) => {
+const ParticipantForm = ({ onCreateParticipant }: ParticipantFormProps) => {
     const [participant, setParticipant] = useState<Participant>({
         name: "",
         age: 0,
@@ -13,7 +13,7 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onCreateParticipant }
         club: "",
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
         setParticipant((prevParticipant) => ({
             ...prevParticipant,
@@ -21,7 +21,7 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onCreateParticipant }
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         onCreateParticipant(participant);
         setParticipant({
@@ -41,13 +41,25 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onCreateParticipant }
                         <label htmlFor="name" className="form-label">
                             Name
                         </label>
-                        <input type="text" className="form-control" id="name" onChange={handleChange} value={participant.name} />
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            onChange={handleChange}
+                            value={participant.name}
+                        />
                     </div>
                     <div className="mb-2">
                         <label htmlFor="age" className="form-label">
                             Age
                         </label>
-                        <input type="number" className="form-control" id="age" onChange={handleChange} value={participant.age} />
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="age"
+                            onChange={handleChange}
+                            value={participant.age}
+                        />
                     </div>
                     <div className="mb-2">
                         <label htmlFor="gender" className="form-label">
@@ -62,7 +74,13 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onCreateParticipant }
                         <label htmlFor="club" className="form-label">
                             Club
                         </label>
-                        <input type="text" className="form-control" id="club" onChange={handleChange} value={participant.club} />
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="club"
+                            onChange={handleChange}
+                            value={participant.club}
+                        />
                     </div>
                     <button type="submit" className="btn btn-primary">
                         Submit
@@ -74,7 +92,6 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onCreateParticipant }
 };
 
 export default ParticipantForm;
-
 
 // import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 // import { Participant } from "../types";
