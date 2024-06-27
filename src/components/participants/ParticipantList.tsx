@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { Participant } from "../../types";
+// import { updateParticipant } from "../../service/apiFacade";
 
 type ListOfParticipantsProps = {
     participants: Participant[];
+    editListedParticipant: (id: number) => void;
     deleteParticipant: (id: number) => void;
 };
 
-export default function ParticipantsList({ participants, deleteParticipant }: ListOfParticipantsProps) {
+export default function ParticipantsList({
+    participants,
+    editListedParticipant,
+    deleteParticipant,
+}: ListOfParticipantsProps) {
     const [sortConfig, setSortConfig] = useState<{
         key: keyof Participant | null;
         direction: "ascending" | "descending";
@@ -47,6 +53,10 @@ export default function ParticipantsList({ participants, deleteParticipant }: Li
         setSortConfig({ key, direction });
     };
 
+    const handleUpdateParticipant = (id: number) => {
+        editListedParticipant(id);
+    };
+
     const handleDeleteParticipant = async (id: number) => {
         deleteParticipant(id);
     };
@@ -76,9 +86,10 @@ export default function ParticipantsList({ participants, deleteParticipant }: Li
                             <th className="clickable-th" onClick={() => requestSort("club")}>
                                 Club
                             </th>
-                            {/* <th className="clickable-th" onClick={() => requestSort("discipline")}>
-                                Discipline
-                            </th> */}
+                            <th className="clickable-th" onClick={() => requestSort("disciplines")}>
+                                Disciplines
+                            </th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -89,7 +100,15 @@ export default function ParticipantsList({ participants, deleteParticipant }: Li
                                 <td>{participant.age}</td>
                                 <td>{participant.gender}</td>
                                 <td>{participant.club}</td>
-                                {/* <td>{participant.discipline}</td> */}
+                                <td>{participant.disciplines.map((d) => d.name).join(", ")}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-warning"
+                                        onClick={() => handleUpdateParticipant(participant.id || -1)}
+                                    >
+                                        Edit
+                                    </button>
+                                </td>
                                 <td>
                                     <button
                                         className="btn btn-danger"

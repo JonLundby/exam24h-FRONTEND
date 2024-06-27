@@ -4,6 +4,13 @@ export interface Participant {
     age: number;
     gender: string;
     club: string;
+    disciplines: Discipline[];
+}
+
+export interface Discipline {
+    id: number;
+    name: string;
+    resultType: string;
 }
 
 export interface Result {
