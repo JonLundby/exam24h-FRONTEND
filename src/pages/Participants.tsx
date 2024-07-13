@@ -19,7 +19,6 @@ export default function Participants() {
     };
 
     const handleCreateUpdateParticipant: CreateUpdateFunctionProps = async (newParticipant: Participant, isCreate) => {
-        console.log(isCreate);
         if (isCreate) {
             await createParticipant(newParticipant);
         } else {
@@ -29,16 +28,20 @@ export default function Participants() {
     };
 
     const editListedParticipant = (id: number) => {
-        console.log(id);
         const participantToUpdate = participants.find((p) => p.id === id);
         if (participantToUpdate) {
             setParticipantToUpdate(participantToUpdate);
         }
+        // console.log(participantToUpdate);
     };
     
     const deleteParticipant = async (id: number) => {
         await deleteParticipantById(id);
         await fetchParticipants();
+    };
+
+    const resetParticipantToUpdate = () => {
+        setParticipantToUpdate(undefined);
     };
 
     return (
@@ -53,6 +56,7 @@ export default function Participants() {
                 <ParticipantForm
                     onSubmitParticipant={handleCreateUpdateParticipant}
                     defaultParticipant={participantToUpdate}
+                    onCancel={resetParticipantToUpdate}
                 />
             </div>
         </>

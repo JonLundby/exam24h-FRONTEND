@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Participant } from "../../types";
-// import { updateParticipant } from "../../service/apiFacade";
 
 type ListOfParticipantsProps = {
     participants: Participant[];
@@ -100,7 +99,14 @@ export default function ParticipantsList({
                                 <td>{participant.age}</td>
                                 <td>{participant.gender}</td>
                                 <td>{participant.club}</td>
-                                <td>{participant.disciplines.map((d) => d.name).join(", ")}</td>
+                                <td>
+                                    {participant.disciplines.map((d, index) => (
+                                        <span key={d.id}>
+                                            {d.name}
+                                            {index < participant.disciplines.length - 1 && <br />}
+                                        </span>
+                                    ))}
+                                </td>
                                 <td>
                                     <button
                                         className="btn btn-warning"

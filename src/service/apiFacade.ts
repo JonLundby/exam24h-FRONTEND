@@ -37,6 +37,8 @@ async function createParticipant(participant: Participant) {
 }
 
 async function postParticipant(participant: Participant) {
+    console.log(participant);
+    
     const response = await fetch(`${endpoint}/participants`, {
         method: "POST",
         headers: {

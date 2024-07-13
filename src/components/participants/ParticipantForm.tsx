@@ -6,9 +6,10 @@ export type CreateUpdateFunctionProps = (participant: Participant, isCreate: boo
 interface ParticipantFormProps {
     onSubmitParticipant: CreateUpdateFunctionProps; // Function to handle submit which is a function that takes a participant and a boolean
     defaultParticipant: Participant | undefined;
+    onCancel: () => void;
 }
 
-export default function ParticipantForm ({ onSubmitParticipant, defaultParticipant }: ParticipantFormProps) {
+export default function ParticipantForm({ onSubmitParticipant, defaultParticipant, onCancel }: ParticipantFormProps) {
     const [participant, setParticipant] = useState<Participant>({
         name: "",
         age: 0,
@@ -29,17 +30,49 @@ export default function ParticipantForm ({ onSubmitParticipant, defaultParticipa
                 disciplines: [],
             });
         }
+        console.log(defaultParticipant);
     }, [defaultParticipant]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
-        console.log(e.target);
+
         setParticipant((prevParticipant) => ({
             ...prevParticipant,
             [id]: value,
         }));
+
         console.log(participant);
     };
+    
+    const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+        const { checked, value } = e.target;
+        const disciplineId = Number(value);
+
+        setParticipant((prevParticipant) => {
+            const disciplines = checked
+                ? [...prevParticipant.disciplines, { id: disciplineId, name: "", resultType: "" }]
+                : prevParticipant.disciplines.filter((discipline) => discipline.id !== disciplineId);
+
+            return {
+                ...prevParticipant,
+                disciplines,
+            };
+        });
+    };
+
+    const handleCancel = (e: FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setParticipant((prevParticipant) => ({
+            ...prevParticipant,
+            name: "",
+            age: 0,
+            gender: "male",
+            club: "",
+            disciplines: [],
+        }));
+
+        onCancel();
+    }
 
     const handleSubmit = (e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -113,11 +146,12 @@ export default function ParticipantForm ({ onSubmitParticipant, defaultParticipa
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="disciplines"
+                                id="100m-løb"
+                                checked={participant.disciplines.some((discipline) => discipline.id === 1)} // TODO: Fix this so that it checks if the discipline is in the disciplines array
                                 value="1"
-                                onChange={handleChange}
+                                onChange={handleChangeCheckbox}
                             />
-                            <label className="form-check-label" htmlFor="disciplines">
+                            <label className="form-check-label" htmlFor="100m-løb">
                                 100m-løb
                             </label>
                         </div>
@@ -125,24 +159,26 @@ export default function ParticipantForm ({ onSubmitParticipant, defaultParticipa
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="disciplines"
+                                id="Diskoskast"
+                                checked={participant.disciplines.some((discipline) => discipline.id === 2)}
                                 value="2"
-                                onChange={handleChange}
+                                onChange={handleChangeCheckbox}
                             />
-                            <label className="form-check-label" htmlFor="disciplines">
-                                tre-spring
+                            <label className="form-check-label" htmlFor="Diskoskast">
+                                Diskoskast
                             </label>
                         </div>
                         <div className="form-check">
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                id="disciplines"
+                                id="Tre-spring"
+                                checked={participant.disciplines.some((discipline) => discipline.id === 3)}
                                 value="3"
-                                onChange={handleChange}
+                                onChange={handleChangeCheckbox}
                             />
-                            <label className="form-check-label" htmlFor="disciplines">
-                                Diskoskast
+                            <label className="form-check-label" htmlFor="Tre-spring">
+                                Tre-spring
                             </label>
                         </div>
                     </div>
@@ -152,17 +188,7 @@ export default function ParticipantForm ({ onSubmitParticipant, defaultParticipa
                         </button>
                         <button
                             className="btn btn-secondary mx-2"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setParticipant({
-                                    name: "",
-                                    age: 0,
-                                    gender: "male",
-                                    club: "",
-                                    disciplines: [],
-                                });
-                            }}
-                        >
+                            onClick={handleCancel}>
                             cancel
                         </button>
                     </div>
