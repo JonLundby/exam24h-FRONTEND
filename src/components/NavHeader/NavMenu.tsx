@@ -11,7 +11,7 @@ export default function NavMenu() {
                 </li>
                 <li>
                     <NavLink to="/participants" className="nav-link text-white ml-3">
-                        Participants(admin only)
+                        Participants
                     </NavLink>
                 </li>
                 <li>

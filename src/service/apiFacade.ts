@@ -78,6 +78,16 @@ async function deleteParticipantById(id: number) {
     return response;
 }
 
+// ------- DISCIPLINES ------- //
+async function fetchAllDisciplines() {
+    const response = await fetch(`${endpoint}/disciplines`);
+    if (!response.ok) {
+        throw new Error("Could not fetch disciplines");
+    }
+    const data = await response.json();
+    return data;
+}
+
 // ------- RESULTS ------- //
 async function fetchAllResults() {
     const response = await fetch(`${endpoint}/results`);
@@ -105,6 +115,7 @@ export {
     postParticipant,
     updateParticipant,
     deleteParticipantById,
+    fetchAllDisciplines,
     fetchAllResults,
     deleteResultById
 };

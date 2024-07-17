@@ -1,15 +1,16 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { Participant } from "../../types";
+import { Participant, Discipline } from "../../types";
 
 export type CreateUpdateFunctionProps = (participant: Participant, isCreate: boolean | undefined) => void;
 
 interface ParticipantFormProps {
     onSubmitParticipant: CreateUpdateFunctionProps; // Function to handle submit which is a function that takes a participant and a boolean
     defaultParticipant: Participant | undefined;
-    onCancel: () => void;
+    onCancel: () => void; // onCancel returns void but carries the function call to the parent component
+    disciplines: Discipline[];
 }
 
-export default function ParticipantForm({ onSubmitParticipant, defaultParticipant, onCancel }: ParticipantFormProps) {
+export default function ParticipantForm({ onSubmitParticipant, defaultParticipant, onCancel, disciplines }: ParticipantFormProps) {
     const [participant, setParticipant] = useState<Participant>({
         name: "",
         age: 0,
@@ -30,7 +31,7 @@ export default function ParticipantForm({ onSubmitParticipant, defaultParticipan
                 disciplines: [],
             });
         }
-        console.log(defaultParticipant);
+        // console.log(defaultParticipant);
     }, [defaultParticipant]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -41,7 +42,7 @@ export default function ParticipantForm({ onSubmitParticipant, defaultParticipan
             [id]: value,
         }));
 
-        console.log(participant);
+        // console.log(participant);
     };
     
     const handleChangeCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,12 +64,12 @@ export default function ParticipantForm({ onSubmitParticipant, defaultParticipan
     const handleCancel = (e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setParticipant((prevParticipant) => ({
-            ...prevParticipant,
-            name: "",
+            ...prevParticipant, // previous participant is unpacked
+            name: "", // the unpacked participant is updated with the new values
             age: 0,
             gender: "male",
             club: "",
-            disciplines: [],
+            disciplines: [], // disciplines are set to an empty array
         }));
 
         onCancel();
@@ -85,7 +86,8 @@ export default function ParticipantForm({ onSubmitParticipant, defaultParticipan
             club: "",
             disciplines: [],
         });
-        console.log(participant);
+
+        // console.log(participant);
     };
 
     return (
@@ -142,7 +144,22 @@ export default function ParticipantForm({ onSubmitParticipant, defaultParticipan
                         <label htmlFor="disciplines" className="form-label">
                             Disciplines
                         </label>
-                        <div className="form-check">
+                        {disciplines.map((discipline) => (
+                            <div className="form-check" key={discipline.id}>
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id={`discipline-${discipline.id}`}
+                                    checked={participant.disciplines.some((d) => d.id === discipline.id)}
+                                    value={discipline.id.toString()}
+                                    onChange={handleChangeCheckbox}
+                                />
+                                <label className="form-check-label" htmlFor={`discipline-${discipline.id}`}>
+                                    {discipline.name}
+                                </label>
+                            </div>
+                        ))}
+                        {/* <div className="form-check">
                             <input
                                 type="checkbox"
                                 className="form-check-input"
@@ -180,15 +197,13 @@ export default function ParticipantForm({ onSubmitParticipant, defaultParticipan
                             <label className="form-check-label" htmlFor="Tre-spring">
                                 Tre-spring
                             </label>
-                        </div>
+                        </div> */}
                     </div>
                     <div>
                         <button className="btn btn-primary mx-2" onClick={handleSubmit}>
                             {!participant.id ? "Submit" : "Update"}
                         </button>
-                        <button
-                            className="btn btn-secondary mx-2"
-                            onClick={handleCancel}>
+                        <button className="btn btn-secondary mx-2" onClick={handleCancel}>
                             cancel
                         </button>
                     </div>

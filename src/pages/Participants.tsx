@@ -1,21 +1,29 @@
 import ParticipantsList from "../components/participants/ParticipantList";
-import { Participant } from "../types";
+import { Participant, Discipline } from "../types";
 import { useEffect, useState } from "react";
-import { fetchAllParticipants, deleteParticipantById, createParticipant, updateParticipant } from "../service/apiFacade";
+import { fetchAllParticipants, deleteParticipantById, createParticipant, updateParticipant, fetchAllDisciplines } from "../service/apiFacade";
 import ParticipantForm, { CreateUpdateFunctionProps } from "../components/participants/ParticipantForm";
 
 export default function Participants() {
+    const [disciplines, setDisciplines] = useState<Discipline[]>([]);
     const [participants, setParticipants] = useState<Participant[]>([]);
     const [participantToUpdate, setParticipantToUpdate] = useState<Participant | undefined>(undefined);
 
     useEffect(() => {
         fetchParticipants();
+        fetchDisciplines();
     }, []);
+
+    const fetchDisciplines = async () => {
+        const fetchedDisciplines = await fetchAllDisciplines();
+        setDisciplines(fetchedDisciplines);
+        console.log(fetchedDisciplines);
+    };
 
     const fetchParticipants = async () => {
         const fetchedParticipants = await fetchAllParticipants();
         setParticipants(fetchedParticipants);
-        console.log(fetchedParticipants);
+        // console.log(fetchedParticipants);
     };
 
     const handleCreateUpdateParticipant: CreateUpdateFunctionProps = async (newParticipant: Participant, isCreate) => {
@@ -57,6 +65,7 @@ export default function Participants() {
                     onSubmitParticipant={handleCreateUpdateParticipant}
                     defaultParticipant={participantToUpdate}
                     onCancel={resetParticipantToUpdate}
+                    disciplines={disciplines}
                 />
             </div>
         </>
